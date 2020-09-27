@@ -6,33 +6,41 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] private float maxXRotation;
     [SerializeField] private float maxZRotation;
 
-    private float currentXRotation;
-    private float currentZRotation;
+    private Vector3 newRotation;
 
     private void Update()
     {
-        CalculateXRotation();
-        CalculateZRotation();
+        CalculateRotation();
     }
 
-    private void CalculateXRotation()
+    private void CalculateRotation()
     {
-        float rotation = -Input.GetAxis("Vertical") * rotationSpeed * Time.deltaTime;
-        print(Mathf.Abs(transform.localEulerAngles.x + rotation));
-        if (Mathf.Abs(transform.localEulerAngles.x + rotation) <= maxXRotation)
+        float rotationz = -Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime;
+        float rotationx = -Input.GetAxis("Vertical") * rotationSpeed * Time.deltaTime;
+
+        float x = transform.localEulerAngles.x;
+        if (IsNextStep(x, rotationx, maxXRotation))
         {
-            //currentXRotation += rotation;
-            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x + rotation, 0, transform.localEulerAngles.z);
+            newRotation.x = x + rotationx;
         }
+
+        float z = transform.localEulerAngles.z;
+        if (IsNextStep(z, rotationz, maxZRotation))
+        {
+            newRotation.z = z + rotationz;
+        }
+
+        transform.localEulerAngles = new Vector3(newRotation.x, 0, newRotation.z);
+    }
+    private float CalculateAngle(float angle)
+    {
+        if (angle > 180) return angle - 360;
+        
+        return angle;
     }
 
-    private void CalculateZRotation()
+    private bool IsNextStep(float angle, float step, float maximum)
     {
-        float rotation = -Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime;
-        if (Mathf.Abs(currentZRotation + rotation) <= maxXRotation)
-        {
-            currentZRotation += rotation;
-            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, 0, currentZRotation);
-        }
+        return Mathf.Abs(CalculateAngle(angle) + step) <= maximum;
     }
 }
