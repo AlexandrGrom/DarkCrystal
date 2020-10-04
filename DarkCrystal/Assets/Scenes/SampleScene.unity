@@ -331,6 +331,7 @@ MonoBehaviour:
   rotationSpeed: 50
   maxXRotation: 30
   maxZRotation: 30
+  speed: 20
 --- !u!65 &1063796585
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -399,7 +400,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1063796583}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.94, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 963194228}

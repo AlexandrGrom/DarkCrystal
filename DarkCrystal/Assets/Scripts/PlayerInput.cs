@@ -5,18 +5,20 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float maxXRotation;
     [SerializeField] private float maxZRotation;
+    [SerializeField] private float speed;
 
     private Vector3 newRotation;
 
     private void Update()
     {
         CalculateRotation();
+        transform.Translate(transform.forward * Time.deltaTime * speed);
     }
 
     private void CalculateRotation()
     {
         float rotationz = -Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime;
-        float rotationx = -Input.GetAxis("Vertical") * rotationSpeed * Time.deltaTime;
+        float rotationx = Input.GetAxis("Vertical") * rotationSpeed * Time.deltaTime;
 
         float x = transform.localEulerAngles.x;
         if (IsNextStep(x, rotationx, maxXRotation))
