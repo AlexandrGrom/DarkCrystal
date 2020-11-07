@@ -12,7 +12,7 @@ public class PlayerInput : MonoBehaviour
     private void Update()
     {
         CalculateRotation();
-        transform.Translate(transform.forward * Time.deltaTime * speed);
+        transform.Translate(Vector3.forward * Time.deltaTime * speed);
     }
 
     private void CalculateRotation()
@@ -30,9 +30,10 @@ public class PlayerInput : MonoBehaviour
         if (IsNextStep(z, rotationz, maxZRotation))
         {
             newRotation.z = z + rotationz;
+            newRotation.y = Mathf.Abs(z + rotationz);
         }
-
-        transform.localEulerAngles = new Vector3(newRotation.x, 0, newRotation.z);
+        //newRotation.y = 0;
+        transform.localEulerAngles = newRotation;
     }
     private float CalculateAngle(float angle)
     {
